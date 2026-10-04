@@ -158,8 +158,9 @@ module.exports = {
     grid.style.gap = "3px";
     grid.style.width = "max-content";
 
-    // 逐格铺列（start 是周日，无需 padding）
+    // 逐格铺列（start 是周日，无需 padding）；今天之后的格子不渲染，最后一列自然收尾
     for (const cell of cells) {
+      if (cell.date.getTime() > today.getTime()) break;
       // 分档：0 / ≤25% / ≤50% / ≤75% / >75%（GitHub 同款思路）
       const ratio = cell.count / max;
       const level = cell.count === 0 ? 0 : ratio <= 0.25 ? 1 : ratio <= 0.5 ? 2 : ratio <= 0.75 ? 3 : 4;
@@ -167,9 +168,7 @@ module.exports = {
       el.style.width = "12px";
       el.style.height = "12px";
       el.style.borderRadius = "2px";
-      const future = cell.date.getTime() > today.getTime();
-      el.title = future ? `${cell.key}（未来）` : `${cell.key} · ${cell.count} 篇`;
-      if (future) el.style.opacity = "0.35";
+      el.title = `${cell.key} · ${cell.count} 篇`;
     }
 
     // 下：图例（少 → 五档 → 多，放网格下方右侧，GitHub 同款）
