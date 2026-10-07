@@ -385,7 +385,8 @@ export class HomeView extends ItemView {
       this.app,
       (kind) => this.insertWidget(kind),
       () => this.promptPasteWidget(),
-      this.plugin
+      this.plugin,
+      new Set(this.page.widgets.map((widget) => widget.kind))
     ).open();
   }
 

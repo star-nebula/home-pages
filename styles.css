@@ -2096,6 +2096,14 @@
   background: color-mix(in srgb, var(--hp-accent) 8%, transparent);
 }
 
+.hp-add-icon-col {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
 .hp-add-icon {
   display: inline-flex;
   flex: none;
@@ -2179,6 +2187,18 @@
   border-radius: 4px;
   background: color-mix(in srgb, var(--hp-accent) 20%, transparent);
   color: var(--hp-accent);
+}
+
+.hp-add-card-added-tag {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--interactive-accent) 18%, transparent);
+  color: var(--interactive-accent);
+  white-space: nowrap;
 }
 
 .hp-add-card-del {
