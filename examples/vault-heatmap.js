@@ -92,8 +92,6 @@ module.exports = {
 
     const scroll = wrap.createDiv({ cls: "vh-scroll" });
     scroll.style.overflowX = "auto";
-    scroll.style.flex = "1";
-    scroll.style.minHeight = "0";
 
     const inner = scroll.createDiv({ cls: "vh-inner" });
     inner.style.display = "flex";
@@ -171,8 +169,8 @@ module.exports = {
       el.title = `${cell.key} · ${cell.count} 篇`;
     }
 
-    // 下：图例（少 → 五档 → 多，放网格下方右侧，GitHub 同款）
-    const legend = wrap.createDiv({ cls: "vh-legend" });
+    // 下：图例（少 → 五档 → 多，挂在网格列下方右对齐，与格子右缘严格对齐）
+    const legend = gridCol.createDiv({ cls: "vh-legend" });
     legend.style.display = "flex";
     legend.style.alignItems = "center";
     legend.style.justifyContent = "flex-end";
