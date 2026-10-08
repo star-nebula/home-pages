@@ -694,17 +694,21 @@
   min-width: 0;
 }
 
-.hp-list-title {
-  flex: 1;
-  min-width: 0;
+/* 文件名右侧内联路径模式：路径紧贴行尾时间戳的左侧 */
+.hp-list-folder {
+  flex: none;
+  max-width: 45%;
   overflow: hidden;
+  margin-right: 2px;
+  color: color-mix(in srgb, var(--text-muted) 42%, var(--background-primary));
+  font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .hp-list-sub {
   overflow: hidden;
-  color: var(--hp-muted);
+  color: color-mix(in srgb, var(--text-muted) 42%, var(--background-primary));
   font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
