@@ -1,4 +1,4 @@
-import { Setting, setIcon } from "obsidian";
+import { Setting, setIcon, TFolder } from "obsidian";
 import { formatRelativeTime } from "../utils/date";
 import { isExcluded, isInScope } from "../utils/vault";
 import { addNumberSetting, addPathSetting, addTextareaSetting } from "../ui/settingHelpers";
@@ -9,10 +9,19 @@ export interface RecentConfig extends Record<string, unknown> {
   folder: string;
   excludeFolders: string[];
   sortBy: "mtime" | "ctime";
+  /** hidden: 不显示；inline: 文件名右侧浅色路径；sub: 文件名下方单独一行 */
+  folderDisplay: "hidden" | "inline" | "sub";
   showFolder: boolean;
 }
 
-const DEFAULTS: RecentConfig = { limit: 8, folder: "", excludeFolders: [], sortBy: "mtime", showFolder: false };
+const DEFAULTS: RecentConfig = {
+  limit: 8,
+  folder: "",
+  excludeFolders: [],
+  sortBy: "mtime",
+  folderDisplay: "hidden",
+  showFolder: false
+};
 
 export const recentWidget: WidgetDefinition<RecentConfig> = {
   kind: "recent",
@@ -27,6 +36,8 @@ export const recentWidget: WidgetDefinition<RecentConfig> = {
     config.limit = clampInt(config.limit, 1, 50, DEFAULTS.limit);
     config.excludeFolders = toStringList(config.excludeFolders);
     config.sortBy = config.sortBy === "ctime" ? "ctime" : "mtime";
+    // 迁移旧布尔开关：showFolder: true 视为 inline（文件名右侧路径）
+    if (config.showFolder === true && config.folderDisplay === "hidden") config.folderDisplay = "inline";
     return config;
   },
 
@@ -44,13 +55,23 @@ export const recentWidget: WidgetDefinition<RecentConfig> = {
       list.createDiv({ cls: "hp-empty", text: "还没有笔记" });
       return;
     }
+    const folderLabel = (file: { parent: TFolder | null }): string | null => {
+      if (config.folderDisplay === "hidden") return null;
+      if (!file.parent || file.parent.path === "/") return null;
+      return file.parent.path;
+    };
+
     for (const file of files) {
       const row = list.createDiv({ cls: "hp-list-row is-clickable", attr: { title: file.path } });
       setIcon(row.createSpan({ cls: "hp-list-icon" }), "file-text");
       const text = row.createDiv({ cls: "hp-list-text" });
-      text.createDiv({ cls: "hp-list-title", text: file.basename });
-      if (config.showFolder && file.parent && file.parent.path !== "/") {
-        text.createDiv({ cls: "hp-list-sub", text: file.parent.path });
+      const folderPath = folderLabel(file);
+      text.createSpan({ cls: "hp-list-title", text: file.basename });
+      if (folderPath && config.folderDisplay === "sub") {
+        text.createDiv({ cls: "hp-list-sub", text: folderPath });
+      }
+      if (folderPath && config.folderDisplay === "inline") {
+        row.createSpan({ cls: "hp-list-folder", text: folderPath });
       }
       row.createSpan({ cls: "hp-list-meta", text: formatRelativeTime(config.sortBy === "ctime" ? file.stat.ctime : file.stat.mtime) });
       row.addEventListener("click", (event) => void ctx.openPath(file.path, { event }));
@@ -80,6 +101,9 @@ export const recentWidget: WidgetDefinition<RecentConfig> = {
         .setValue(config.sortBy)
         .onChange((value) => ctx.update({ sortBy: value === "ctime" ? "ctime" : "mtime" })));
     new Setting(container).setName("显示所在文件夹")
-      .addToggle((toggle) => toggle.setValue(config.showFolder).onChange((value) => ctx.update({ showFolder: value })));
+      .addDropdown((dropdown) => dropdown
+        .addOptions({ hidden: "不显示", inline: "文件名右侧", sub: "文件名下方" })
+        .setValue(config.folderDisplay)
+        .onChange((value) => ctx.update({ folderDisplay: value === "inline" || value === "sub" ? value : "hidden" })));
   }
 };
