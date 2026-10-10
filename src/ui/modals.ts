@@ -79,13 +79,14 @@ export class WidgetSettingsModal extends Modal {
   }
 }
 
-/** 选择要添加的组件类型。 */
+/** 选择要添加的组件类型。existingKinds 里已有的类型会在卡片上标注「已添加」（仍可重复添加）。 */
 export class AddWidgetModal extends Modal {
   constructor(
     app: App,
     private readonly onPick: (kind: WidgetKind) => void,
     private readonly onPaste?: () => void,
-    private readonly plugin?: HomePagesPlugin
+    private readonly plugin?: HomePagesPlugin,
+    private readonly existingKinds?: ReadonlySet<string>
   ) {
     super(app);
   }
@@ -126,7 +127,12 @@ export class AddWidgetModal extends Modal {
       const isCustom = !isBuiltinKind(definition.kind) && (this.plugin?.customWidgetManager.hasKind(definition.kind) ?? false);
       const card = grid.createDiv({ cls: `hp-add-card${isCustom ? " hp-add-card-user" : ""}` });
       card.style.setProperty("--hp-accent", definition.accent);
-      setIcon(card.createDiv({ cls: "hp-add-icon" }), definition.icon);
+      const added = this.existingKinds?.has(definition.kind) ?? false;
+      const iconCol = card.createDiv({ cls: "hp-add-icon-col" });
+      setIcon(iconCol.createDiv({ cls: "hp-add-icon" }), definition.icon);
+      if (added) {
+        iconCol.createSpan({ cls: "hp-add-card-added-tag", text: "已添加" });
+      }
       const text = card.createDiv({ cls: "hp-add-text" });
       const nameRow = text.createDiv({ cls: "hp-add-name-row" });
       nameRow.createDiv({ cls: "hp-add-name", text: definition.name });
