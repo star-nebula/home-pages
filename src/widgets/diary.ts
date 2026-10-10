@@ -77,7 +77,7 @@ export const diaryWidget: WidgetDefinition<DiaryConfig> = {
   defaultConfig: () => ({ ...DEFAULTS, excludeFolders: [] }),
   normalizeConfig: (raw) => {
     const config = normalizeWith(DEFAULTS, raw);
-    config.limit = clampInt(config.limit, 5, 200, DEFAULTS.limit);
+    config.limit = clampInt(config.limit, 5, 500, DEFAULTS.limit);
     config.showStats = config.showStats === true;
     config.showPreview = config.showPreview === true;
     config.year = typeof config.year === "string" ? config.year : "";
@@ -174,13 +174,17 @@ export const diaryWidget: WidgetDefinition<DiaryConfig> = {
       groups.set(entry.year, bucket);
     }
     let rendered = 0;
+    let truncated = false;
     for (const year of [...groups.keys()].sort().reverse()) {
       const group = groups.get(year)!;
       const head = list.createDiv({ cls: "hp-diary-group-head" });
       head.createSpan({ cls: "hp-diary-group-name", text: `${year} 年` });
       head.createSpan({ cls: "hp-diary-group-count", text: `${group.length} 篇` });
       for (const entry of group) {
-        if (rendered >= config.limit) return;
+        if (rendered >= config.limit) {
+          truncated = true;
+          break;
+        }
         rendered++;
         const row = list.createDiv({ cls: "hp-list-row hp-diary-row is-clickable", attr: { title: entry.file.path } });
         setIcon(row.createSpan({ cls: "hp-list-icon" }), "calendar");
@@ -197,6 +201,14 @@ export const diaryWidget: WidgetDefinition<DiaryConfig> = {
         row.createSpan({ cls: "hp-list-meta", text: entry.date === today ? "今天" : "" });
         row.addEventListener("click", (event) => void ctx.openPath(entry.file.path, { event }));
       }
+      if (truncated) break;
+    }
+    // 列表被条数上限截断时明说，避免「全部」看起来缺年份。
+    if (truncated) {
+      list.createDiv({
+        cls: "hp-empty",
+        text: `已按「最多显示条数」（${config.limit}）截断，仅显示最新 ${rendered} 篇；可在组件设置里调大上限。`
+      });
     }
   },
 
@@ -210,7 +222,7 @@ export const diaryWidget: WidgetDefinition<DiaryConfig> = {
       suggest: { files: false, folders: true },
       onChange: (value) => ctx.update({ folder: value })
     });
-    addNumberSetting(container, { name: "最多显示条数", value: config.limit, min: 5, max: 200, onChange: (value) => ctx.update({ limit: value }) });
+    addNumberSetting(container, { name: "最多显示条数", value: config.limit, min: 5, max: 500, onChange: (value) => ctx.update({ limit: value }) });
     new Setting(container).setName("统计瓦片").setDesc("日记总数 / 最近一篇 / 本月 / 年份跨度。")
       .addToggle((toggle) => toggle.setValue(config.showStats).onChange((value) => ctx.update({ showStats: value })));
     new Setting(container).setName("首句预览").setDesc("日记行下方显示正文第一句话（截 40 字）。")
