@@ -744,6 +744,40 @@
   height: 11px;
 }
 
+/* ---- 日记组件 --------------------------------------------------------------- */
+
+.hp-diary-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 8px 4px;
+}
+
+.hp-diary-group-head:first-child {
+  padding-top: 2px;
+}
+
+.hp-diary-group-name {
+  color: var(--hp-accent);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.hp-diary-group-count {
+  color: var(--hp-muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hp-diary-row .hp-list-title {
+  font-variant-numeric: tabular-nums;
+}
+
+.hp-diary-preview {
+  margin-top: 2px;
+}
+
 /* ---- 欢迎横幅 --------------------------------------------------------------- */
 
 .hp-card-hero {
