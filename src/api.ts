@@ -8,10 +8,10 @@ import type { WidgetDefinition } from "./widgets/types";
 /**
  * Home Pages 对外 API：其他插件把自己的首页组件注册进来，首页只做宿主。
  *
- *   const api = app.plugins.plugins["home-pages"]?.api;
+ *   const api = app.plugins.plugins["home-pages-star-nebula"]?.api;
  *   api?.registerWidget(definition, "duowei-table-pro");
  *
- * 首页可能晚于调用方加载：首页就绪时会触发 workspace 事件 "home-pages:ready"（参数为 api）。
+ * 首页可能晚于调用方加载：首页就绪时会触发 workspace 事件 "home-pages-star-nebula:ready"（参数为 api）。
  */
 export interface HomePagesApi {
   version: 1;

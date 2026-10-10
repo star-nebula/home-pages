@@ -714,14 +714,15 @@ async function testMediaCachingAndProgress(): Promise<void> {
       adapter: {
         exists: async (p: string) => storage.has(p),
         read: async (p: string) => storage.get(p) ?? "",
-        write: async (p: string, data: string) => { storage.set(p, data); }
+        write: async (p: string, data: string) => { storage.set(p, data); },
+        mkdir: async (_p: string) => {}
       }
     }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await saveDiskCacheNow(mockApp as any);
-  const cacheFilePath = ".obsidian/plugins/home-pages/media-cache.json";
+  const cacheFilePath = ".obsidian/plugins/home-pages-star-nebula/media-cache.json";
   check("saveDiskCacheNow writes to adapter", storage.has(cacheFilePath));
   const writtenJson = JSON.parse(storage.get(cacheFilePath) || "{}") as { feedCache?: unknown[] };
   check("saved disk cache contains feedCache array", Array.isArray(writtenJson.feedCache));

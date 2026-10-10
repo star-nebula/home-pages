@@ -11,7 +11,7 @@ type SettingApp = { setting?: { open: () => void; openTabById: (id: string) => v
 
 export default class HomePagesPlugin extends Plugin {
   settings: HomePagesSettings = { ...DEFAULT_SETTINGS, pages: [createDefaultPage()] };
-  /** 对外 API：其他插件用 app.plugins.plugins["home-pages"].api 注册自己的首页组件。 */
+  /** 对外 API：其他插件用 app.plugins.plugins["home-pages-star-nebula"].api 注册自己的首页组件。 */
   api: HomePagesApi = createApi(this);
   /** 自定义脚本组件管理器：负责扫描指定目录、热重载与示例生成。 */
   readonly customWidgetManager = new CustomWidgetManager(this);
@@ -82,7 +82,7 @@ export default class HomePagesPlugin extends Plugin {
     this.addSettingTab(new HomePagesSettingTab(this.app, this));
 
     // 通知晚于本插件加载 / 正在监听的插件：可以注册组件了。
-    (this.app.workspace as unknown as { trigger(name: string, ...data: unknown[]): void }).trigger("home-pages:ready", this.api);
+    (this.app.workspace as unknown as { trigger(name: string, ...data: unknown[]): void }).trigger("home-pages-star-nebula:ready", this.api);
 
     this.customWidgetManager.registerWatcher();
     this.app.workspace.onLayoutReady(async () => {

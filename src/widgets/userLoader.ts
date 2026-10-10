@@ -552,7 +552,7 @@ export class CustomWidgetManager {
   }
 
   async createDemoTemplate(): Promise<TFile | null> {
-    const folderPath = this.getFolder() || "_scripts/home-pages";
+    const folderPath = this.getFolder() || "_scripts/home-pages-star-nebula";
     const vault = this.plugin.app.vault;
 
     if (!this.plugin.settings.customWidgetsFolder) {
@@ -635,7 +635,7 @@ export class PasteWidgetModal extends Modal {
           try {
             const def = await evaluateWidgetScript(source, this.app);
             const mgr = this.plugin.customWidgetManager;
-            const folderPath = mgr.getFolder() || "_scripts/home-pages";
+            const folderPath = mgr.getFolder() || "_scripts/home-pages-star-nebula";
             const vault = this.app.vault;
 
             if (!this.plugin.settings.customWidgetsFolder) {

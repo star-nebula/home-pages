@@ -567,16 +567,17 @@ function stripItemForCache(item: MediaItem): MediaItem {
   };
 }
 
-/** 从 .obsidian/plugins/home-pages/media-cache.json 加载持久化磁盘缓存，恢复 0ms 本地冷启动体验 */
+/** 从 <configDir>/plugins/<插件id>/media-cache.json 加载持久化磁盘缓存，恢复 0ms 本地冷启动体验。兼容旧 home-pages 目录。 */
 export async function loadDiskCache(app: App): Promise<void> {
   try {
     if (!app?.vault?.adapter) return;
     const configDir = app.vault.configDir;
     if (!configDir) return;
-    const cachePath = normalizePath(`${configDir}/plugins/home-pages/${DISK_CACHE_FILE}`);
-    if (!(await app.vault.adapter.exists(cachePath))) return;
+    const cachePath = normalizePath(`${configDir}/plugins/home-pages-star-nebula/${DISK_CACHE_FILE}`);
+    const legacyPath = normalizePath(`${configDir}/plugins/home-pages/${DISK_CACHE_FILE}`);
+    const readFrom = (await app.vault.adapter.exists(cachePath)) ? cachePath : (await app.vault.adapter.exists(legacyPath)) ? legacyPath : cachePath;
 
-    const text = await app.vault.adapter.read(cachePath);
+    const text = await app.vault.adapter.read(readFrom);
     const parsed = JSON.parse(text) as {
       feedCache?: Array<[string, FeedCacheEntry]>;
       qiushiIssues?: Array<[string, string]>;
@@ -615,7 +616,7 @@ export async function saveDiskCacheNow(app: App): Promise<void> {
     if (!app?.vault?.adapter) return;
     const configDir = app.vault.configDir;
     if (!configDir) return;
-    const cacheFolder = normalizePath(`${configDir}/plugins/home-pages`);
+    const cacheFolder = normalizePath(`${configDir}/plugins/home-pages-star-nebula`);
     const cachePath = normalizePath(`${cacheFolder}/${DISK_CACHE_FILE}`);
 
     const feedEntries: Array<[string, FeedCacheEntry]> = [];
@@ -645,6 +646,7 @@ export async function saveDiskCacheNow(app: App): Promise<void> {
       lastMediaData: lastMediaMap
     });
 
+    await app.vault.adapter.mkdir(cacheFolder);
     await app.vault.adapter.write(cachePath, payload);
   } catch (err) {
     console.warn("Home Pages: 保存媒体磁盘缓存失败", err);
