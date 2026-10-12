@@ -7,6 +7,7 @@ export type BuiltinWidgetKind =
   | "pomodoro"
   | "quote"
   | "habit"
+  | "diary"
   | "kanban"
   | "stats"
   | "onthisday"

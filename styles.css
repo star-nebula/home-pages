@@ -740,6 +740,70 @@
   height: 11px;
 }
 
+/* ---- 日记组件 --------------------------------------------------------------- */
+
+/* 卡片 body 无自带内边距，列表区有 .hp-list 兜底；
+   日记的 KPI/筛选行直接挂在 body 上，需要组件级内边距兜住四边。 */
+.hp-diary {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  padding: 10px 12px 12px;
+}
+
+.hp-diary-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 8px 3px;
+}
+
+.hp-diary-group-head:first-child {
+  padding-top: 2px;
+}
+
+.hp-diary-group-name {
+  color: var(--hp-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.hp-diary-group-count {
+  color: color-mix(in srgb, var(--hp-muted) 60%, transparent);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hp-diary-row .hp-list-title {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hp-diary-weekday {
+  color: var(--hp-muted);
+  font-size: 11px;
+}
+
+.hp-diary-today {
+  padding: 0 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hp-accent) 15%, transparent);
+  color: var(--hp-accent);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.hp-diary-preview {
+  margin-top: 2px;
+}
+
 /* ---- 欢迎横幅 --------------------------------------------------------------- */
 
 .hp-card-hero {
@@ -2957,10 +3021,13 @@
 }
 
 .hp-kpi-value {
+  overflow: hidden;
   color: var(--hp-tone);
-  font-size: 22px;
-  font-weight: 800;
-  line-height: 1.1;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 
@@ -2982,20 +3049,21 @@
 
 .hp-segmented {
   display: inline-flex;
-  gap: 2px;
-  padding: 2px;
-  border-radius: 999px;
-  background: var(--background-modifier-hover);
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0;
+  background: transparent;
 }
 
 .hp-segment {
-  padding: 2px 10px;
+  padding: 0 11px;
   border: none;
   border-radius: 999px;
   background: transparent;
   color: var(--hp-muted);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 500;
+  line-height: 16px;
   cursor: pointer;
   box-shadow: none;
   transition: background 0.12s ease, color 0.12s ease;
@@ -3005,10 +3073,16 @@
   color: var(--text-normal);
 }
 
+.hp-segment-count {
+  margin-left: 6px;
+  color: color-mix(in srgb, var(--hp-muted) 62%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
 .hp-segment.is-active {
-  background: var(--hp-card-bg);
+  background: color-mix(in srgb, var(--hp-accent) 14%, transparent);
   color: var(--text-normal);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12);
+  box-shadow: none;
 }
 
 .hp-annot-collection {
