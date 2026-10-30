@@ -6,8 +6,9 @@
 一款专为 Obsidian 打造的现代化、模块化响应式首页看板插件。基于 12 列自适应网格，支持组件自由增删、拖拽排序、平滑缩放与独立配置；支持多页面管理与第三方插件扩展。
 
 > [!IMPORTANT]
-> **关于本项目：** 本项目 fork 自 [jepicaju862-lab/home-pages](https://github.com/jepicaju862-lab/home-pages)（GPL-3.0 协议）。由于原项目长期未回应 issue 与 PR，自即日起由 [star-nebula](https://github.com/star-nebula) 独立维护，原作的贡献归属于原作者。插件 id 为 `home-pages-star-nebula`，可与原版插件共存。原版用户迁移方法：重新安装本版本后，把 `.obsidian/plugins/home-pages/data.json` 复制到 `.obsidian/plugins/home-pages-star-nebula/` 即可保留原有布局。
+> **Fork 状态：已归档 / 由 Home Deck 接替。** 本项目 fork 自 [jepicaju862-lab/home-pages](https://github.com/jepicaju862-lab/home-pages)（GPL-3.0 协议）。本项目仅作历史参考，**不再积极维护**；后续开发已迁移到 **[star-nebula/home-deck](https://github.com/star-nebula/home-deck)**。原作的贡献归属于原作者。插件 id 为 `home-pages-star-nebula`，可与原版插件共存。原版用户迁移方法：重新安装本版本后，把 `.obsidian/plugins/home-pages/data.json` 复制到 `.obsidian/plugins/home-pages-star-nebula/` 即可保留原有布局。
 
+- **维护状态：** 已归档；后续开发见 [Home Deck](https://github.com/star-nebula/home-deck)。
 - **发布产物：** [GitHub Releases](https://github.com/star-nebula/home-pages/releases) —— 本 fork **尚未发布任何 Release**；从上游仓库继承的 tag（`v0.3.1` 及更早）在本仓库只是 tag，不含任何发布产物。
 - **最低 Obsidian 版本：** 1.7.2
 - **支持平台：** 桌面端与移动端（iOS / Android）

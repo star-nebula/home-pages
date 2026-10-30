@@ -19,7 +19,12 @@
     "dashboard",
     "widgets"
   ],
-  "author": "and",
+  "author": "star-nebula",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/star-nebula/home-pages.git"
+  },
+  "homepage": "https://github.com/star-nebula/home-pages",
   "license": "GPL-3.0-only",
   "devDependencies": {
     "@eslint/js": "^9.39.5",
