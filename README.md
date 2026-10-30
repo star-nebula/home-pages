@@ -6,9 +6,8 @@
 A modern, modular, and responsive homepage dashboard plugin for Obsidian. Built on a flexible 12-column adaptive grid, it empowers you to customize your workspace with draggable, resizable, and individually configurable widgets. Support multiple pages and third-party plugin integrations.
 
 > [!IMPORTANT]
-> **Fork status: archived / superseded.** This repository is a fork of [jepicaju862-lab/home-pages](https://github.com/jepicaju862-lab/home-pages) (GPL-3.0). It is retained for historical reference and is **no longer actively maintained**. Active development has moved to **[star-nebula/home-deck](https://github.com/star-nebula/home-deck)**. All credit for the original work goes to the original author. Plugin id: `home-pages-star-nebula` — it can be installed alongside the original plugin. Existing users of the original plugin need to reinstall this version and copy `data.json` from `.obsidian/plugins/home-pages/` to `.obsidian/plugins/home-pages-star-nebula/` to migrate their layouts.
+> **About this fork:** This project is a fork of [jepicaju862-lab/home-pages](https://github.com/jepicaju862-lab/home-pages) (GPL-3.0), maintained independently by [star-nebula](https://github.com/star-nebula) since the original project became unresponsive to issues and pull requests. All credit for the original work goes to the original author. Plugin id: `home-pages-star-nebula` — it can be installed alongside the original plugin. Existing users of the original plugin need to reinstall this version and copy `data.json` from `.obsidian/plugins/home-pages/` to `.obsidian/plugins/home-pages-star-nebula/` to migrate their layouts.
 
-- **Maintenance:** Archived; see [Home Deck](https://github.com/star-nebula/home-deck) for the actively developed successor.
 - **Releases:** [GitHub Releases](https://github.com/star-nebula/home-pages/releases) — no release has been published from this fork yet. Tags inherited from the upstream repository (`v0.3.1` and earlier) exist here as tags only and carry no release assets.
 - **Minimum Obsidian version:** 1.7.2
 - **Supported platforms:** Desktop and Obsidian Mobile (iOS / Android)
